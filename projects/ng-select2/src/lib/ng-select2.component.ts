@@ -69,6 +69,7 @@ export class NgSelect2Component implements AfterViewInit, OnChanges, OnDestroy, 
   private element: any = undefined;
   private check = false;
   // private style = `CSS`;
+  onTouched = (e: any) => { }
 
   constructor(private renderer: Renderer2, public zone: NgZone, public _element: ElementRef) {
   }
@@ -106,6 +107,7 @@ export class NgSelect2Component implements AfterViewInit, OnChanges, OnDestroy, 
       this.setElementValue(newValue);
       this.valueChanged.emit(newValue);
       this.propagateChange(newValue);
+      this.onTouched(newValue);
     }
 
     if (changes['value'] && changes['value'].previousValue !== changes['value'].currentValue) {
@@ -115,6 +117,7 @@ export class NgSelect2Component implements AfterViewInit, OnChanges, OnDestroy, 
       this.setElementValue(newValue);
       this.valueChanged.emit(newValue);
       this.propagateChange(newValue);
+      this.onTouched(newValue);
     }
 
     if (changes['disabled'] && changes['disabled'].previousValue !== changes['disabled'].currentValue) {
@@ -152,6 +155,7 @@ export class NgSelect2Component implements AfterViewInit, OnChanges, OnDestroy, 
 
       this.valueChanged.emit(newValue);
       this.propagateChange(newValue);
+      this.onTouched(newValue);
     });
   }
 
@@ -244,7 +248,8 @@ export class NgSelect2Component implements AfterViewInit, OnChanges, OnDestroy, 
     this.propagateChange = fn;
   }
 
-  registerOnTouched() {
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean) {
